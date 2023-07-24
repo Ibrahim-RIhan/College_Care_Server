@@ -50,6 +50,11 @@ async function run() {
       const result = await reviewCollection.find().toArray()
       res.send(result);
     })
+    app.post('/reviews', async (req, res) => {
+      const item = req.body;
+      const result = await reviewCollection.insertOne(item)
+      res.send(result);
+    })
 
     app.get('/users', async (req, res) => {
       const result = await userCollection.find().toArray()
@@ -80,8 +85,9 @@ async function run() {
       const result = await usersCollegeCollection.insertOne(item)
       res.send(result)
     })
+    app
 
-    app.get('/my-college:email', async (req, res) => {
+    app.get('/my-college/:email', async (req, res) => {
       const email = req.params.email;
       const filter = {email: email}
       const result = await usersCollegeCollection.find(filter).toArray()
